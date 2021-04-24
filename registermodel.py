@@ -126,38 +126,3 @@ class Register():
         }
         with open('register_'+str(self._id)+'_rundow.json', 'w') as file:
             json.dump(json_export, file)
-
-if __name__=='__main__':
-    def grp():
-        return round(uniform(40,100),2)
-    def gri():
-        return round(uniform(1,10))
-    def grt():
-        return round(uniform(50,200))
-
-    def group_cash(reg):
-        for i in range(grt()):
-            price = grp()
-            reg.cash_transaction(price,math.ceil(price),gri())
-    def group_debit(reg):
-        for i in range(grt()):
-            reg.debit_transaction(grp(),gri())
-    def group_credit(reg):
-        for i in range(grt()):
-            reg.credit_transaction(grp(),gri())
-    def group_giftcard(reg):
-        for i in range(grt()):
-            reg.giftcard_transaction(grp(),gri())
-    def group_return(reg):
-        methods = ['cash','credit','debit','giftcard']
-        for i in range(grt()):
-            method_i = randint(0,3)
-            reg.return_item(methods[method_i],grp()/2)
-    x = Register(1,250)
-    group_cash(x)
-    group_credit(x)
-    group_debit(x)
-    group_giftcard(x)
-    group_return(x)
-    x.rundown()
-    x.rundown_json()
