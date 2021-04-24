@@ -1,4 +1,4 @@
-from registermodel import Register
+from RegisterModel import Register
 from random import uniform
 from random import randint
 import math
