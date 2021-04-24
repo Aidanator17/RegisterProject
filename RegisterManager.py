@@ -109,7 +109,7 @@ class RegisterManager():
             print('Total money made: ${:.2f}'.format(gettotalmade))
             print('Money made by cash: ${:.2f}\nMoney made by debit: ${:.2f}\nMoney made by credit: ${:.2f}\nMoney made by giftcards: ${:.2f}'.format(cashmoneymade,debitmoneymade,creditmoneymade,giftcardmoneymade))
             print('Money returned: ${:.2f}'.format(moneyreturned))
-            print('\nTotal transactions: {}\nNumber of cash transactions:{}\nNumber of debit transactions:{}\nNumber of credit transactions:{}\nNumber of giftcards transactions:{}\nNumber of return transactions:{}'.format(totaltrans,cashtrans,debittrans,credittrans,giftcardtrans,returntrans))
+            print('\nTotal transactions: {}\nNumber of cash transactions: {}\nNumber of debit transactions: {}\nNumber of credit transactions:{}\nNumber of giftcards transactions: {}\nNumber of return transactions: {}'.format(totaltrans,cashtrans,debittrans,credittrans,giftcardtrans,returntrans))
             print('\nCash in registers:')
             for reg in self._registers:
                 print('Register {} - ${:.2f}'.format(reg.id,reg._cashinregister))
@@ -163,3 +163,4 @@ if __name__=="__main__":
     rm.add_register(reg2)
     rm.add_register(reg3)
     rm.rundown()
+    input()
