@@ -126,3 +126,31 @@ class Register():
         }
         with open('register_'+str(self._id)+'_rundow.json', 'w') as file:
             json.dump(json_export, file)
+
+    def rundown_dict(self):
+        json_export = {
+            'money_details':{
+                'total_money_made':round(self.get_total_made,2),
+                'cash':round(self._cash_money_made,2),
+                'debit':round(self._debit_money_made,2),
+                'credit':round(self._credit_money_made,2),
+                'giftcard':round(self._giftcard_money_made,2),
+                'returned':round(self._money_returned,2)
+            },
+            'transaction_details':{
+                'total_transactions':self.get_total_trans,
+                'cash':self._cash_trans,
+                'debit':self._debit_trans,
+                'credit':self._credit_trans,
+                'giftcard':self._giftcard_trans,
+                'return':self._return_trans,
+            },
+            'cash_in_register':round(self._cashinregister,2),
+            'stats':{
+                'items_purchased':self._items_pertrans,
+                'avg_item_per_trans':round(self._items_pertrans/self.get_total_purchase_trans,2),
+                'avg_cost_per_item':round(self._money_made/self._items_pertrans,2),
+                'avg_trans_cost':round(self._money_made/self.get_total_purchase_trans,2)
+            }
+        }
+        return json_export

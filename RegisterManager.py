@@ -1,4 +1,4 @@
-from RegisterModel import Register
+from registermodel import Register
 from random import uniform
 from random import randint
 import math
@@ -115,7 +115,74 @@ class RegisterManager():
                 print('Register {} - ${:.2f}'.format(reg.id,reg._cashinregister))
             print('\nItems purchased: {}\nAverage number of items per transaction: {:.2f}\nAverage cost per item: ${:.2f}\nAverage transaction cost: ${:.2f}'.format(itemspertrans,itemspertrans/totalpurchasetrans,moneymade/itemspertrans,moneymade/totalpurchasetrans))
   
-
+    def rundown_json(self):
+        if len(self._registers) == 0:
+            print("There are no registers tied to the manager")
+        else:
+            gettotalmade = 0
+            cashmoneymade = 0
+            debitmoneymade = 0
+            creditmoneymade = 0
+            giftcardmoneymade = 0
+            moneyreturned = 0
+            totaltrans = 0
+            cashtrans = 0
+            debittrans = 0
+            credittrans = 0
+            giftcardtrans = 0
+            returntrans = 0
+            itemspertrans = 0
+            totalpurchasetrans = 0
+            moneymade = 0
+            for reg in self._registers:
+                gettotalmade += reg.get_total_made
+                cashmoneymade += reg._cash_money_made
+                debitmoneymade += reg._debit_money_made
+                creditmoneymade += reg._credit_money_made
+                giftcardmoneymade += reg._giftcard_money_made
+                moneyreturned += reg._money_returned
+                totaltrans += reg.get_total_trans
+                cashtrans += reg._cash_trans
+                debittrans += reg._debit_trans
+                credittrans += reg._credit_trans
+                giftcardtrans += reg._giftcard_trans
+                returntrans += reg._return_trans
+                itemspertrans += reg._items_pertrans
+                totalpurchasetrans += reg.get_total_purchase_trans
+                moneymade += reg._money_made
+            all_regs = {
+                'money_details':{
+                    'total_money_made':round(gettotalmade,2),
+                    'cash':round(cashmoneymade,2),
+                    'debit':round(debitmoneymade,2),
+                    'credit':round(creditmoneymade,2),
+                    'giftcard':round(giftcardmoneymade,2),
+                    'returned':round(moneyreturned,2)
+                },
+                'transaction_details':{
+                    'total_transactions':totaltrans,
+                    'cash':cashtrans,
+                    'debit':debittrans,
+                    'credit':credittrans,
+                    'giftcard':giftcardtrans,
+                    'return':returntrans,
+                },
+                'cash_in_registers':{},
+                'stats':{
+                    'items_purchased':itemspertrans,
+                    'avg_item_per_trans':round(itemspertrans/totalpurchasetrans,2),
+                    'avg_cost_per_item':round(moneymade/itemspertrans,2),
+                    'avg_trans_cost':round(moneymade/totalpurchasetrans,2)
+                }
+            }
+            for reg in self._registers:
+                all_regs['cash_in_registers']['Register {}'.format(reg.id)] = round(reg._cashinregister,2)
+            json_export = {}
+            json_export['all_registers'] = all_regs
+            for reg in self._registers:
+                json_export['register_{}'.format(reg.id)] = reg.rundown_dict()
+            with open('registers_rundown.json','w') as file:
+                json.dump(json_export, file)
 
 def fill(regi):
     def grp():
@@ -162,5 +229,4 @@ if __name__=="__main__":
     rm.add_register(reg1)
     rm.add_register(reg2)
     rm.add_register(reg3)
-    rm.rundown()
-    input()
+    rm.rundown_json()
